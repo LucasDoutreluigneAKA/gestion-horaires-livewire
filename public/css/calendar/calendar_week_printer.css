@@ -1,0 +1,271 @@
+.calendar-printer
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: calc(100vw - 200px);
+    height: calc(100vh - 110px);
+}
+
+#table
+{
+    width: 100%;
+    height: 100%;
+
+    background-color: white;
+
+    border: 0;
+    border-left: 1px solid black;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#table-head
+{
+    width: 100%;
+    height: 60px;
+}
+
+#table-head-wrapper
+{
+    width: calc(100% - 70px);
+    margin-left: 70px;
+}
+
+#table-head-content
+{
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    /* width: calc(100% - 25px); */
+    height: 100%;
+
+    /* margin: 0 0 0 25px; */
+}
+
+.table-head-element
+{
+    flex: 0 0 20%;
+
+    text-align: center;
+    line-height: 60px;
+
+    font-family: "Calibri";
+    text-transform: capitalize;
+    font-size: 15px;
+
+    box-shadow: 0px -0.5px 0 gray inset;
+}
+
+
+
+
+#table-body
+{
+    width: 100%;
+    height: calc(100% - 60px);
+}
+
+#table-body-content-wrapper
+{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+#table-body-content
+{
+    display: flex;
+    position: relative;
+    flex: 0 0 auto;
+    flex-direction: row;
+
+    padding-top: 10px;
+    width: 100%;
+    overflow: hidden;
+    height: auto;
+}
+
+#table-body-cases
+{
+    position: relative;
+    width: calc(100% - 70px);
+}
+
+#table-body-hours
+{
+    position: relative;
+    width: 70px;
+}
+
+#table-body-hours .content-column
+{
+    line-height: 10px;
+    margin-top: -5px;
+}
+
+.content-line
+{
+    display: flex;
+    width: 100%;
+    height: 80px;
+}
+
+.content-column
+{
+    flex: 1 1 20%;
+    height: 100%;
+
+    text-align: center;
+    line-height: 80px;
+
+    box-shadow: 0.5px 0.5px 0 gray inset;
+}
+
+.no-shadow
+{
+    box-shadow: none;
+}
+
+#table-body-events
+{
+    position: absolute;
+    top: 0;
+
+    width: 100%;
+    height: 0;
+}
+
+.event-item
+{
+    position: absolute;
+    width: calc(20% - 30px);
+
+    padding: 10px;
+    margin: 0px 5px 0 5px;
+
+    border: 0.5px solid #213872;
+
+    background-color: #B6BDFF;
+}
+
+.event-item-full-width
+{
+    width: calc(100% - 30px);
+}
+
+.event-item:hover
+{
+    background-color: #95A5CE;
+}
+
+.td-item:last-child{
+    margin-bottom: 5px;
+}
+
+.event-item span{
+    display: block;
+    font-family: 'Calibri';
+}
+
+.event-item-hours{
+    font-style: italic;
+    font-size: 15px;
+}
+
+.event-item-name{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+
+
+
+
+/* .calendar-printer table tbody{
+    width: 100%;
+}
+
+.calendar-printer table tr{
+    width: 100%;
+    height: auto;
+}
+
+.calendar-printer table th{
+    width: 20%;
+    padding: 15px;
+
+    border: 0;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+
+    font-family: Calibri;
+    font-style: normal;
+}
+
+.calendar-printer table th:first-child,
+.innerb table td:first-child{
+    border-left: 0;
+}
+
+.calendar-printer table td{
+    vertical-align: top;
+}
+
+.innerb td{
+    width: 20%;
+    min-height: 30px;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    border-right: 1px solid black;
+}
+
+.innerb{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.td-item{
+    width: calc(100% - 30px);
+
+    padding: 10px;
+    margin: 5px 5px 0 5px;
+
+
+    background-color: #B6BDFF;
+}
+
+.td-item:last-child{
+    margin-bottom: 5px;
+}
+
+.td-item span{
+    display: block;
+    font-family: 'Calibri';
+}
+
+.td-item-hours{
+    font-style: italic;
+    font-size: 15px;
+}
+
+.td-item-name{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#table2 tr{
+    height: 30px;
+    border-bottom: 1px solid gray;
+}
+*/
