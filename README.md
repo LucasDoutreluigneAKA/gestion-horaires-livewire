@@ -4,7 +4,7 @@ __Installation__
 - Installer les dépendances composer : composer install
 - Créer le fichier .env (contenu copiable à partir du fichier .env.example)
 - Configurer les accès à la base de données dans le fichier .env
-- Mettre à jour la base de données : php artisan migrate:fresh
+- Mettre à jour la base de données : php artisan migrate:fresh --seed
 
 __Démarrer le projet__  
 - Se placer dans le répertoire racine du projet
