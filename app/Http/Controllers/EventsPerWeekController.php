@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Jenssegers\Date\Date;
+use Illuminate\Support\Facades\DB;
 
 class EventsPerWeekController extends Controller
 {
@@ -39,17 +40,31 @@ class EventsPerWeekController extends Controller
         }
 
         $day = Date::parse($date);
-        $startOfWeek = $day->startOfWeek();
-        $endOfWeek = $day->endOfWeek();
+        $startOfWeek = $day->startOfWeek()->startOfDay();
+        $endOfWeek = $day->endOfWeek()->endOfDay();
 
-        return Event::whereBetween('event_first_date', [$startOfWeek, $endOfWeek])
-            ->orWhere('event_do_every_day', '=', 1)
-            ->orWhere('event_do_every_week', '=', 1)
-            ->orWhere([
-                ['event_do_every_two_weeks', '=', '1'],
-                ['event_first_date_week_parity', '=', intval($day->format('W')) % 2]
-            ])
-            ->orderBy('event_begin_hour', 'asc')
+        return
+            // Event::where(
+            //     function($query) use($day)
+            //     {
+            //         Date::setLocale('fr');
+            //         ddd(DB::raw('*'));
+            //         // $first_date = Date::setTimezone('UTC')->parse(DB::raw('first_date'));
+            //         $first_date = Date::parse(DB::raw('first_date'))->setTimezone('UTC');
+            //         // $query->whereBetween($first_date, [$startOfWeek->startOfDay(), $endOfWeek->endOfDay()]);
+            //     }
+            // )
+            Event::whereBetween('first_date', [$startOfWeek, $endOfWeek])
+            ->orWhere('do_every_day', '=', 1)
+            ->orWhere('do_every_week', '=', 1)
+            ->orWhere(
+                function($query) use($day)
+                {
+                    $query->where('do_every_two_weeks', 1)
+                          ->where('first_date_week_parity', intval($day->format('W')) % 2);
+                }
+            )
+            ->orderBy('begin_hour', 'asc')
             ->get();
     }
 }

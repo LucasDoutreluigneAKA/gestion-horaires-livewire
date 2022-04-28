@@ -1,0 +1,32 @@
+#insert-event-modal
+{
+    position: absolute;
+    display: flex;
+
+    width: 100vw;
+    height: 100vh;
+
+    justify-content: center;
+    align-content: center;
+
+    top: 0;
+    left: 0;
+
+    z-index: 20;
+}
+
+.insert-event-modal
+{
+    position: fixed;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    justify-self: center;
+    align-self: center;
+
+    width: auto;
+}

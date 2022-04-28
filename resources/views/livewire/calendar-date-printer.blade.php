@@ -35,16 +35,15 @@
                             @endforeach
                         </div>
 
-                        <div id="table-body-cases">
+                        <div
+                            id="table-body-cases"
+                            x-on:click.stop="$dispatch('open-insert-event-modal')">
                             @foreach (range(0, 23) as $i)
                                 <div class="content-line">
 
                                     @if ($viewWeekMode == "week")
                                         @foreach (range(0, 4) as $y)
                                             <div class="content-column">
-
-
-
                                             </div>
                                         @endforeach
                                     @else
@@ -64,15 +63,16 @@
                                     @foreach ($viewedWeek as $index => $day)
                                         @foreach ($day['events'] as $event)
                                             <div class="event-item"
-                                                style="top: {{ $this->convertHoursToPixels($event['event_begin_hour']) }}px;
+                                                style="top: {{ $this->convertHoursToPixels($event['begin_hour']) }}px;
                                                        left: {{ $this->convertDayNameToPercentage($index) }}%;
-                                                       height: {{ $this->convertDurationToPixels($event['event_begin_hour'], $event['event_end_hour']) }}px;
-                                                       z-index: {{ $z_index += 3 }}
-                                                ">
+                                                       height: {{ $this->convertDurationToPixels($event['begin_hour'], $event['end_hour']) }}px;
+                                                       z-index: 2
+                                                "
+                                                x-on:click.stop="console.log('event cliqué')">
                                                 <span
-                                                    class="event-item-hours">{{ $event['event_begin_hour'] }} à {{ $event['event_end_hour'] }}</span>
+                                                    class="event-item-hours">{{ $event['begin_hour'] }} à {{ $event['end_hour'] }}</span>
 
-                                                <span class="event-item-name">{{ $event['event_name'] }}</span>
+                                                <span class="event-item-name">{{ $event['name'] }}</span>
                                             </div>
 
                                         @endforeach
@@ -83,14 +83,13 @@
                                     @foreach ($viewedWeek[$viewWeekMode]['events'] as $event)
 
                                         <div class="event-item event-item-full-width"
-                                            style="top: {{ $this->convertHoursToPixels($event['event_begin_hour']) }}px;
-                                                   height: {{ $this->convertDurationToPixels($event['event_begin_hour'], $event['event_end_hour']) }}px;
-                                                   z-index: {{ $z_index += 3 }}
+                                            style="top: {{ $this->convertHoursToPixels($event['begin_hour']) }}px;
+                                                   height: {{ $this->convertDurationToPixels($event['begin_hour'], $event['end_hour']) }}px;
                                             ">
                                             <span
-                                                class="event-item-hours">{{ $event['event_begin_hour'] }} à {{ $event['event_end_hour'] }}</span>
+                                                class="event-item-hours">{{ $event['begin_hour'] }} à {{ $event['end_hour'] }}</span>
 
-                                            <span class="event-item-name">{{ $event['event_name'] }}</span>
+                                            <span class="event-item-name">{{ $event['name'] }}</span>
                                         </div>
 
                                     @endforeach

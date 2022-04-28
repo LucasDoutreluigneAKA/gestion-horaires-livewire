@@ -13,12 +13,24 @@ class CalendarDatePrinter extends Component
     public $viewWeekMode = 'week';
     public $z_index = 0;
 
-    protected $listeners = ['updateViewedWeek', 'changeViewMode'];
+    protected $listeners = [
+        'updateViewedWeek' => 'updateViewedWeek',
+        'changeViewMode' => 'changeViewMode',
+        '$refresh',
+        'refreshWeekEvents'
+    ];
 
 
     public function mount()
     {
         $this->updateViewedWeek();
+    }
+
+    public function refreshWeekEvents()
+    {
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        $out->writeln('Demande de rafraichissement des evenements');
+        $this->updateViewedWeek(Date::parse($this->viewedWeek['monday']['date'])->format('d-m-Y'));
     }
 
     public function changeViewMode($mode)
@@ -108,10 +120,10 @@ class CalendarDatePrinter extends Component
         $eventsOfWeek = EventsPerWeekController::getEventsOfWeek($day->format('d-m-Y'));
 
         $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        // $out->writeln("event: " . $event->id . " begin: " . $event->event_begin_hour);
+        // $out->writeln("event: " . $event->id . " begin: " . $event->begin_hour);
 
         // foreach ($eventsOfWeek as $event){
-        //     $out->writeln(collect($event) . "\nevent_do_every_day = " . $event->event_do_every_day);
+        //     $out->writeln(collect($event) . "\ndo_every_day = " . $event->do_every_day);
         // }
 
 
@@ -122,24 +134,22 @@ class CalendarDatePrinter extends Component
                 // $out->writeln($index . "\n" . $weekDay['date'] . "\n\n");
                 // $this->viewedWeek[$index]['events'][] = collect($event);
 
+                /* Jour correspondant */
+                /* Tous les jours */
+                /* Chaque semaine, jour correspondant*/
+                /* Toutes les deux semaines, jour correspondant */
                 if(
-                    /* Jour correspondant */
-                    Date::parse($event->event_first_date)->format('d-m-y') == $weekDay['date']->format('d-m-Y') ||
 
-                    /* Tous les jours */
-                    $event->event_do_every_day == 1 ||
-
-                    /* Chaque semaine, jour correspondant*/
-                    (
-                        $event->event_first_date_day_name == $weekDay['date']->format('l') &&
-                        $event->event_do_every_week == 1
-                    ) ||
-
-                    /* Toutes les deux semaines, jour correspondant */
-                    (
-                        $event->event_first_date_day_name == $weekDay['date']->format('l') &&
-                        $event->event_do_every_two_weeks == 1 &&
-                        $event->event_first_date_week_parity == intval($weekDay['date']->format('W')) % 2
+                    Date::parse($event->first_date)->format('d-m-y') == $weekDay['date']->format('d-m-Y')
+                    ||$event->do_every_day == 1
+                    || (
+                        $event->first_date_day_name == $weekDay['date']->format('l') &&
+                        $event->do_every_week == 1
+                    )
+                    || (
+                        $event->first_date_day_name == $weekDay['date']->format('l') &&
+                        $event->do_every_two_weeks == 1 &&
+                        $event->first_date_week_parity == intval($weekDay['date']->format('W')) % 2
                     )
                 )
                 {
