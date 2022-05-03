@@ -1,0 +1,39 @@
+#event-view-modal
+{
+    position: fixed;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    justify-self: center;
+    align-self: center;
+
+    top: calc(50% - 280px);
+    left: calc(50% - 180px);
+
+    width: 300px;
+    max-width: 300px;
+}
+
+#edit
+{
+    background: #549D21;
+}
+
+#edit:hover
+{
+    background: #3B7414;
+}
+
+#delete
+{
+    background: #C93B3B;
+}
+
+#delete:hover
+{
+    background: #8B1818;
+}

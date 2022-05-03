@@ -37,7 +37,7 @@
 
                         <div
                             id="table-body-cases"
-                            x-on:click.stop="$dispatch('open-insert-event-modal')">
+                            x-on:click="$dispatch('lock-page'); $dispatch('open-event-insert-modal')">
                             @foreach (range(0, 23) as $i)
                                 <div class="content-line">
 
@@ -68,7 +68,8 @@
                                                        height: {{ $this->convertDurationToPixels($event['begin_hour'], $event['end_hour']) }}px;
                                                        z-index: 2
                                                 "
-                                                x-on:click.stop="console.log('event cliqué')">
+                                                wire:click="$emit('view-event', {{ $event['id'] }});"
+                                                x-on:click.stop>
                                                 <span
                                                     class="event-item-hours">{{ $event['begin_hour'] }} à {{ $event['end_hour'] }}</span>
 

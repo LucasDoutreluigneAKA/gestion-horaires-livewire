@@ -28,8 +28,6 @@ class CalendarDatePrinter extends Component
 
     public function refreshWeekEvents()
     {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln('Demande de rafraichissement des evenements');
         $this->updateViewedWeek(Date::parse($this->viewedWeek['monday']['date'])->format('d-m-Y'));
     }
 

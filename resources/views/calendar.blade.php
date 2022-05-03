@@ -9,6 +9,9 @@
 
     <link rel="stylesheet" href="/css/modals/modal.css">
     <link rel="stylesheet" href="/css/modals/insert-event-modal.css">
+    <link rel="stylesheet" href="/css/modals/event-view-modal.css">
+    <link rel="stylesheet" href="/css/modals/event-edit-modal.css">
+    <link rel="stylesheet" href="/css/modals/event-delete-modal.css">
 
     <script
         src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer>
@@ -25,5 +28,18 @@
     <livewire:calendar-date-picker />
     <livewire:calendar-menu />
 
-    <livewire:modals.insert-event-modal />
+    <div
+        x-data="{lock_page: false}"
+        x-on:lock-page.window="lock_page = true"
+        x-on:unlock-page.window="lock_page = false; $dispatch('close-all')"
+        x-on:click="lock_page = false; $dispatch('close-all')"
+        x-show="lock_page"
+        id="page-locker">
+    </div>
+
+    <livewire:modals.event-insert-modal />
+    <livewire:modals.event-view-modal />
+    <livewire:modals.event-edit-modal />
+    <livewire:modals.event-delete-modal />
+
 @endsection

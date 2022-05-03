@@ -1,21 +1,4 @@
-/* #insert-event-modal
-{
-    position: absolute;
-    display: flex;
-
-    width: 100vw;
-    height: 100vh;
-
-    justify-content: center;
-    align-content: center;
-
-    top: 0;
-    left: 0;
-
-    z-index: 20;
-} */
-
-#insert-event-modal
+#event-edit-modal
 {
     position: fixed;
 

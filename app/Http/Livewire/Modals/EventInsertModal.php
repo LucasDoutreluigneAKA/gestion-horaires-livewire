@@ -7,20 +7,12 @@ use Jenssegers\Date\Date;
 use App\Models\Event;
 use Illuminate\Support\Facades\Validator;
 
-class InsertEventModal extends Component
+class EventInsertModal extends EventManipulationModal
 {
 
     public function submit($formData)
     {
-
-        // dd($formData);
-        $validator = Validator::make($formData, [
-            'date' => ['required', 'date'],
-            'begin_hour' => ['required', 'date_format:G:i'],
-            'end_hour' => ['required', 'date_format:G:i'],
-            "name" => ["required", 'string', 'max:255'],
-            "description" => ["required", 'string', 'max:500']
-        ]);
+        $this->validate();
 
         $parsedDate = Date::parse($formData['date']);
         Event::create([
@@ -36,15 +28,12 @@ class InsertEventModal extends Component
             "do_every_two_weeks" => isset($formData['every_two_weeks']) ? 1 : 0
         ]);
 
-        /* NON EXECUTE, chercher pourquoi */
-
         $this->emit('refreshWeekEvents');
-        $this->emit('$refresh');
-        $this->dispatchBrowserEvent('close-insert-event-modal');
+        $this->dispatchBrowserEvent('unlock-page');
     }
 
     public function render()
     {
-        return view('livewire.modals.insert-event-modal');
+        return view('livewire.modals.event-insert-modal');
     }
 }
