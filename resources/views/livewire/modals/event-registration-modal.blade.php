@@ -1,19 +1,21 @@
 <div
     x-data="{open: false}"
     x-show="open"
-    x-on:open-event-edit-modal.window="open = true"
-    x-on:close-event-edit-modal.window="open = false"
+    x-on:open-event-registration-modal.window="open = true"
+    x-on:close-event-registration-modal.window="open = false"
     x-on:close-all.window="open = false"
-    id="event-edit-modal"
+    id="event-registration-modal"
     class="modal "
     x-show="open">
-    <h1>Modifier un évènement</h1>
+    <h1>Enregistrer un évènement</h1>
     <div class="modal-content">
 
         <form
-            wire:submit.prevent='submit(Object.fromEntries(new FormData($event.target)))'*
+            wire:submit.prevent="submit"
             method="POST"
             x-on:click.stop>
+
+            <input type="hidden" wire:model.lazy="event_id" />
 
             <div class="modal-full-container">
                 <label for="name">Nom</label>

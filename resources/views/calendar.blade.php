@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="/css/modals/modal.css">
     <link rel="stylesheet" href="/css/modals/insert-event-modal.css">
+    <link rel="stylesheet" href="/css/modals/event-registration-modal.css">
     <link rel="stylesheet" href="/css/modals/event-view-modal.css">
     <link rel="stylesheet" href="/css/modals/event-edit-modal.css">
     <link rel="stylesheet" href="/css/modals/event-delete-modal.css">
@@ -37,9 +38,8 @@
         id="page-locker">
     </div>
 
-    <livewire:modals.event-insert-modal />
+    <livewire:modals.event-registration-modal />
     <livewire:modals.event-view-modal />
-    <livewire:modals.event-edit-modal />
     <livewire:modals.event-delete-modal />
 
 @endsection

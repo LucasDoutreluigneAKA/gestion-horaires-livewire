@@ -35,17 +35,22 @@ class EventViewModal extends Component
         $this->every_week = $event->do_every_week;
         $this->every_two_weeks = $event->do_every_two_weeks;
 
+        // dd($this);
+
         $this->dispatchBrowserEvent('lock-page');
         $this->dispatchBrowserEvent('open-event-view-modal');
     }
 
     public function emitEditEvent()
     {
-        $this->emit('edit-event', [
+        $this->emit('change-event-id', [
             'event_id' => $this->event_id
         ]);
+
+        // dd($this);
+
         $this->dispatchBrowserEvent('close-event-view-modal');
-        $this->dispatchBrowserEvent('open-event-edit-modal');
+        $this->dispatchBrowserEvent('open-event-registration-modal');
     }
 
     public function emitDeleteEvent()
@@ -53,6 +58,7 @@ class EventViewModal extends Component
         $this->emit('change-event-id', [
             'event_id' => $this->event_id
         ]);
+
         $this->dispatchBrowserEvent('close-event-view-modal');
         $this->dispatchBrowserEvent('open-event-delete-modal');
     }

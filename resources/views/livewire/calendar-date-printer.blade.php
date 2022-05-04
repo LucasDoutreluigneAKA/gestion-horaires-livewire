@@ -37,7 +37,8 @@
 
                         <div
                             id="table-body-cases"
-                            x-on:click="$dispatch('lock-page'); $dispatch('open-event-insert-modal')">
+                            wire:click="$emit('clear-registration')"
+                            x-on:click="$dispatch('lock-page'); $dispatch('open-event-registration-modal')">
                             @foreach (range(0, 23) as $i)
                                 <div class="content-line">
 

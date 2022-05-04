@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
  */
 class EventManipulationModal extends Component
 {
-
+    public $event_id;
     public $date;
     public $begin_hour;
     public $end_hour;
@@ -65,9 +65,22 @@ class EventManipulationModal extends Component
         $this->validateOnly($property);
     }
 
-    public function submit($formData)
+    public function submit()
     {
         $this->validate();
+    }
+
+    public function clearAttributes()
+    {
+        $this->event_id = null;
+        $this->date = null;
+        $this->begin_hour = null;
+        $this->end_hour = null;
+        $this->name = null;
+        $this->description = null;
+        $this->every_day = null;
+        $this->every_week = null;
+        $this->every_two_weeks = null;
     }
 
     public function render()

@@ -11,7 +11,7 @@
     <div class="modal-content">
 
         <form
-            wire:submit.prevent='submit(Object.fromEntries(new FormData($event.target)))'*
+            wire:submit.prevent='submit'
             method="POST"
             x-on:click.stop>
 
@@ -27,7 +27,7 @@
 
             <div class="modal-half-container right">
                 <button
-                wire:click="cancel">Annuler</button>
+                wire:click="$emit('unlock-page')">Annuler</button>
             </div>
 
         </form>

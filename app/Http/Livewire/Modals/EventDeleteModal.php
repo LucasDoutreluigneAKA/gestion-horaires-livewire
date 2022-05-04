@@ -14,7 +14,7 @@ class EventDeleteModal extends Component
         'change-event-id' => 'changeEventID'
     ];
 
-    public function submit($formData)
+    public function submit()
     {
         Event::find($this->event_id)->first()->delete();
         $this->emit('refreshWeekEvents');
