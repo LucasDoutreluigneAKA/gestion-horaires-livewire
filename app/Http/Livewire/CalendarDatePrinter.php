@@ -127,6 +127,7 @@ class CalendarDatePrinter extends Component
 
         foreach($eventsOfWeek as $event)
         {
+            // dd(Date::parse($event->date)->format('d-m-Y'));
             foreach ($this->viewedWeek as $index => $weekDay){
 
                 // $out->writeln($index . "\n" . $weekDay['date'] . "\n\n");
@@ -137,18 +138,7 @@ class CalendarDatePrinter extends Component
                 /* Chaque semaine, jour correspondant*/
                 /* Toutes les deux semaines, jour correspondant */
                 if(
-
-                    Date::parse($event->first_date)->format('d-m-y') == $weekDay['date']->format('d-m-Y')
-                    ||$event->do_every_day == 1
-                    || (
-                        $event->first_date_day_name == $weekDay['date']->format('l') &&
-                        $event->do_every_week == 1
-                    )
-                    || (
-                        $event->first_date_day_name == $weekDay['date']->format('l') &&
-                        $event->do_every_two_weeks == 1 &&
-                        $event->first_date_week_parity == intval($weekDay['date']->format('W')) % 2
-                    )
+                    Date::parse($event->date)->format('d-m-Y') == $weekDay['date']->format('d-m-Y')
                 )
                 {
                     /* Enregistrement de l'évènement dans la liste */
@@ -169,6 +159,13 @@ class CalendarDatePrinter extends Component
         if($index == "wednesday") return 40;
         if($index == "thursday") return 60;
         if($index == "friday") return 80;
+    }
+
+    public function sendResetForm()
+    {
+        $this->emit('clear-registration');
+        $this->emit('setSerieEditionEnabled', false);
+        $this->emit('setChangeRecursivityEnabled', true);
     }
 
 

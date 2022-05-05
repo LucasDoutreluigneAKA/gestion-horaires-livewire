@@ -20,19 +20,20 @@ use Illuminate\Support\Facades\Validator;
 class EventManipulationModal extends Component
 {
     public $event_id;
+    public $serie;
     public $date;
     public $begin_hour;
     public $end_hour;
     public $name;
     public $description;
-    public $every_day;
-    public $every_week;
-    public $every_two_weeks;
+    public $recursivity;
+    public $period;
 
     protected $rules = [
+        'serie' => ['required', 'string', 'max:36'],
         'date' => ['required', 'date'],
-        'begin_hour' => ['required', 'date_format:H:i'],
-        'end_hour' => ['required', 'date_format:H:i'],
+        'begin_hour' => ['required', 'date_format:H:i', 'before:end_hour'],
+        'end_hour' => ['required', 'date_format:H:i', 'after:begin_hour'],
         "name" => ["required", 'string', 'max:255'],
         "description" => ["required", 'string', 'max:500']
     ];
@@ -46,9 +47,11 @@ class EventManipulationModal extends Component
 
         "begin_hour.required" => "Veuillez saisir une heure de début.",
         "begin_hour.date_format" => "Le format de l'heure est invalide.",
+        "begin_hour.before" => "Les horaires sont invalides.",
 
         "end_hour.required" => "Veuillez saisir une heure de fin.",
         "end_hour.date_format" => "Le format de l'heure est invalide.",
+        "end_hour.after" => "Les horaires sont invalides.",
 
         "name.required" => "Veuillez saisir un nom.",
         "name.string" => "Veuillez saisir un nom.",
@@ -58,6 +61,21 @@ class EventManipulationModal extends Component
         "description.string" => "Veuillez saisir une description.",
         "description.max" => "La description ne doit pas dépasser 500 caractères."
     ];
+
+    public function setDate($value)
+    {
+        $this->date = Date::parse($value);
+    }
+
+    public function getDate()
+    {
+        return Date::parse($this->date);
+    }
+
+    public function getFormattedDate()
+    {
+        return $this->getDate()->format('d/m/Y');
+    }
 
     /* Méthode appelée à chaque mise à jour de propriétée */
     public function updated($property)
@@ -73,14 +91,14 @@ class EventManipulationModal extends Component
     public function clearAttributes()
     {
         $this->event_id = null;
+        $this->serie = null;
         $this->date = null;
         $this->begin_hour = null;
         $this->end_hour = null;
         $this->name = null;
         $this->description = null;
-        $this->every_day = null;
-        $this->every_week = null;
-        $this->every_two_weeks = null;
+        $this->recursivity = "one-time";
+        $this->period = 1;
     }
 
     public function render()

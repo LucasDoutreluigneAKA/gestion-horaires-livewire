@@ -7,7 +7,12 @@
     id="event-registration-modal"
     class="modal "
     x-show="open">
-    <h1>Enregistrer un évènement</h1>
+    @if ($serie_edition_enabled)
+        <h1>Enregistrer une série</h1>
+    @else
+        <h1>Enregistrer un évènement</h1>
+    @endif
+
     <div class="modal-content">
 
         <form
@@ -15,55 +20,69 @@
             method="POST"
             x-on:click.stop>
 
-            <input type="hidden" wire:model.lazy="event_id" />
+            <input type="hidden" wire:model.defer="event_id" />
 
             <div class="modal-full-container">
                 <label for="name">Nom</label>
-                <input wire:model.lazy='name' type="text" name="name" id="name" placeholder="Travailler durement" />
+                <input wire:model.defer='name' type="text" name="name" id="name" placeholder="Travailler durement" />
                 <span class="form-error">@error('name') {{ $message }} @enderror</span>
             </div>
 
             <div class="modal-full-container">
                 <label for="description">Description</label>
-                <textarea wire:model.lazy='description' name="description" id="description" placeholder="Parce que travailler c'est bien..."></textarea>
+                <textarea wire:model.defer='description' name="description" id="description" placeholder="Parce que travailler c'est bien..."></textarea>
                 <span class="form-error">@error('description') {{ $message }} @enderror</span>
             </div>
 
-            <div class="modal-full-container">
-                <label for="date">Date</label>
-                <input wire:model.lazy='date' type="date" name="date" id="date" placeholder="01/01/2022" />
-                <span class="form-error">@error('date') {{ $message }} @enderror</span>
-            </div>
+            @if (!$serie_edition_enabled)
+                <div class="modal-full-container">
+                    <label for="date">Date</label>
+                    <input wire:model.defer='date' type="date" name="date" id="date" placeholder="01/01/2022" />
+                    <span class="form-error">@error('date') {{ $message }} @enderror</span>
+                </div>
+            @endif
 
             <div class="modal-half-container left">
                 <label for="begin_hour">Heure de début</label>
-                <input wire:model.lazy='begin_hour' type="time" min="00:00" max="23:59" name="begin_hour" id="begin_hour" placeholder="07:00" />
+                <input wire:model.defer='begin_hour' type="time" min="00:00" max="23:59" name="begin_hour" id="begin_hour" placeholder="07:00" />
                 <span class="form-error">@error('begin_hour') {{ $message }} @enderror</span>
             </div>
 
             <div class="modal-half-container right">
-                <label for="end_hour">Heure de début</label>
-                <input wire:model.lazy='end_hour' type="time" min="00:00" max="23:59" name="end_hour" id="end_hour" placeholder="18:00" />
+                <label for="end_hour">Heure de fin</label>
+                <input wire:model.defer='end_hour' type="time" min="00:00" max="23:59" name="end_hour" id="end_hour" placeholder="18:00" />
                 <span class="form-error">@error('end_hour') {{ $message }} @enderror</span>
             </div>
 
-            <div class="modal-full-container row">
-                <input wire:model.lazy='every_day' type="checkbox" name="every_day" id="every_day" />
-                <label for="every_day" class="inline-label">Appliquer tous les jours</label>
-                <span class="form-error">@error('every_day') {{ $message }} @enderror</span>
-            </div>
+            @if ($change_recursivity_enabled)
 
-            <div class="modal-full-container row">
-                <input wire:model.lazy='every_week' type="checkbox" name="every_week" id="every_week" />
-                <label for="every_week">Appliquer toutes les semaines</label>
-                <span class="form-error">@error('every_week') {{ $message }} @enderror</span>
-            </div>
+                <div class="modal-half-container left">
+                    <label for="recursivity">Récursivité</label>
+                    <select wire:model='recursivity' name="recursivity" id="recursivity">
+                        <option value="one-time">Une seule fois</option>
+                        <option value="every-day">Tous les jours</option>
+                        <option value="every-week">Toutes les semaines au même jour</option>
+                        <option value="every-two-weeks">Toutes les deux semaines au même jour</option>
+                    </select>
+                    <span class="form-error"></span>
+                </div>
 
-            <div class="modal-full-container row">
-                <input wire:model.lazy='every_two_weeks' type="checkbox" name="every_two_weeks" id="every_two_weeks" />
-                <label for="every_two_weeks">Appliquer toutes les deux semaines</label>
-                <span class="form-error">@error('every_two_weeks') {{ $message }} @enderror</span>
-            </div>
+                @if ($recursivity != "one-time")
+
+                    <div class="modal-half-container right">
+                        <label for="period">Période</label>
+                        <select wire:model='period' name="period" id="period">
+                            <option value="1">Une semaine</option>
+                            <option value="2">Deux semaines</option>
+                            <option value="4">Un mois</option>
+                            <option value="13">Trois mois</option>
+                        </select>
+                        <span class="form-error"></span>
+                    </div>
+
+                @endif
+
+            @endif
 
             <div class="modal-full-container">
                 <input type="submit" value="Enregistrer" />

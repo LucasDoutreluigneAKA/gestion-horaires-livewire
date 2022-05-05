@@ -185,6 +185,13 @@
     font-size: 15px;
 }
 
+.event-item-description{
+    font-size: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 
 
 

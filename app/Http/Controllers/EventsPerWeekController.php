@@ -27,21 +27,19 @@ class EventsPerWeekController extends Controller
     }
 
     public function getEventsOfCurrentWeek(){
-        return $this->getEventsOfWeek(Date::now()->format('d-m-Y'));
+        return $this->getEventsOfWeek(Date::now());
     }
 
 
     public function getEventsOfWeek($date)
     {
         if($date == null || !Date::isValidDate($date)){
-            return response()->json([
-                "error" => "Cette date n'existe pas."
-            ]);
+            $day = Date::now();
         }
 
         $day = Date::parse($date);
-        $startOfWeek = $day->startOfWeek()->startOfDay();
-        $endOfWeek = $day->endOfWeek()->endOfDay();
+        $startOfWeek = $day->copy()->startOfWeek()->startOfDay();
+        $endOfWeek = $day->copy()->endOfWeek()->endOfDay();
 
         return
             // Event::where(
@@ -54,16 +52,7 @@ class EventsPerWeekController extends Controller
             //         // $query->whereBetween($first_date, [$startOfWeek->startOfDay(), $endOfWeek->endOfDay()]);
             //     }
             // )
-            Event::whereBetween('first_date', [$startOfWeek, $endOfWeek])
-            ->orWhere('do_every_day', '=', 1)
-            ->orWhere('do_every_week', '=', 1)
-            ->orWhere(
-                function($query) use($day)
-                {
-                    $query->where('do_every_two_weeks', 1)
-                          ->where('first_date_week_parity', intval($day->format('W')) % 2);
-                }
-            )
+            Event::whereBetween('date', [$startOfWeek, $endOfWeek])
             ->orderBy('begin_hour', 'asc')
             ->get();
     }

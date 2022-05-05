@@ -23,7 +23,7 @@
 
         <div class="modal-full-container">
             <span class="label">Date</span>
-            <span class="information">@if ($this->date != null) {{ $this->date->format('m-d-Y') }} @endif</span>
+            <span class="information">@if ($this->date != null) {{ $this->date->format('d/m/Y') }} @endif</span>
         </div>
 
         <div class="modal-half-container left">
@@ -36,25 +36,28 @@
             <span class="information">{{ $this->end_hour }}</span>
         </div>
 
-        <div class="modal-full-container">
-            <span class="label">Répétitions</span>
-            @if ($this->every_day === 1) <span class="information">Tous les jours</span>
-            @elseif ($this->every_week === 1) <span class="information">Toutes les semaines</span>
-            @elseif ($this->every_two_weeks === 1) <span class="information">Toutes les deux semaines</span>
-            @else <span class="information">Aucune répétition</span>
-            @endif
+        <div class="modal-half-container left">
+            <button
+                id="edit"
+                wire:click="sendEditEvent">Modifier</button>
+        </div>
+
+        <div class="modal-half-container right">
+            <button
+                id="edit"
+                wire:click="sendEditSerie">Modifier en série</button>
         </div>
 
         <div class="modal-half-container left">
             <button
-                id="edit"
-                wire:click="emitEditEvent">Modifier</button>
+                id="delete"
+                wire:click="sendDeleteEvent">Supprimer</button>
         </div>
 
         <div class="modal-half-container right">
             <button
                 id="delete"
-                wire:click="emitDeleteEvent">Supprimer</button>
+                wire:click="sendDeleteSerie">Supprimer en série</button>
         </div>
 
     </div>

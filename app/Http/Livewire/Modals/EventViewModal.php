@@ -9,14 +9,12 @@ use Jenssegers\Date\Date;
 class EventViewModal extends Component
 {
     public $event_id;
+    public $serie;
     public $date;
     public $begin_hour;
     public $end_hour;
     public $name;
     public $description;
-    public $every_day;
-    public $every_week;
-    public $every_two_weeks;
 
     public $listeners = [
         'view-event' => 'viewEvent'
@@ -25,15 +23,13 @@ class EventViewModal extends Component
     public function viewEvent($id)
     {
         $event = Event::findOrFail($id);
+        $this->serie = $event->serie;
         $this->event_id = $event->id;
-        $this->date = Date::parse($event->date);
+        $this->date = $event->date;
         $this->begin_hour = $event->begin_hour;
         $this->end_hour = $event->end_hour;
         $this->name = $event->name;
         $this->description = $event->description;
-        $this->every_day = $event->do_every_day;
-        $this->every_week = $event->do_every_week;
-        $this->every_two_weeks = $event->do_every_two_weeks;
 
         // dd($this);
 
@@ -41,10 +37,13 @@ class EventViewModal extends Component
         $this->dispatchBrowserEvent('open-event-view-modal');
     }
 
-    public function emitEditEvent()
+    public function sendEditEvent()
     {
-        $this->emit('change-event-id', [
-            'event_id' => $this->event_id
+        $this->emit('changeEvent', [
+            'event_id' => $this->event_id,
+            'serie' => $this->serie,
+            'serie_edition_enabled' => false,
+            'change_recursivity_enabled' => false
         ]);
 
         // dd($this);
@@ -53,10 +52,39 @@ class EventViewModal extends Component
         $this->dispatchBrowserEvent('open-event-registration-modal');
     }
 
-    public function emitDeleteEvent()
+    public function sendEditSerie()
     {
-        $this->emit('change-event-id', [
-            'event_id' => $this->event_id
+        $this->emit('changeEvent', [
+            'event_id' => $this->event_id,
+            'serie' => $this->serie,
+            'serie_edition_enabled' => true,
+            'change_recursivity_enabled' => true
+        ]);
+
+        // dd($this);
+
+        $this->dispatchBrowserEvent('close-event-view-modal');
+        $this->dispatchBrowserEvent('open-event-registration-modal');
+    }
+
+    public function sendDeleteEvent()
+    {
+        $this->emit('deleteEvent', [
+            'event_id' => $this->event_id,
+            'serie' => $this->serie,
+            'serie_deletion_enabled' => false
+        ]);
+
+        $this->dispatchBrowserEvent('close-event-view-modal');
+        $this->dispatchBrowserEvent('open-event-delete-modal');
+    }
+
+    public function sendDeleteSerie()
+    {
+        $this->emit('deleteEvent', [
+            'event_id' => $this->event_id,
+            'serie' => $this->serie,
+            'serie_deletion_enabled' => true
         ]);
 
         $this->dispatchBrowserEvent('close-event-view-modal');
